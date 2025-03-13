@@ -6,6 +6,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\SaleController;
 use App\Http\Controllers\HomeController;
 
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -16,6 +17,9 @@ use App\Http\Controllers\HomeController;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+use App\Http\Controllers\LevelController;
+Route::get('/level', [LevelController::class, 'index']);
+
 // Home
 Route::get('/', [HomeController::class, 'index']);
 // Category Routes
