@@ -5,6 +5,8 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\SaleController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\LevelController;
+use App\Http\Controllers\KategoriController;
 
 
 /*
@@ -17,8 +19,8 @@ use App\Http\Controllers\HomeController;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-use App\Http\Controllers\LevelController;
 Route::get('/level', [LevelController::class, 'index']);
+Route::get('/kategori', [KategoriController::class, 'index']);
 
 // Home
 Route::get('/', [HomeController::class, 'index']);
