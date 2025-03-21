@@ -70,7 +70,7 @@ class KategoriController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'kategori_kode'   => 'required|string|max:5|unique:m_kategori,kategori_kode',
+            'kategori_kode'   => 'required|string|max:10|unique:m_kategori,kategori_kode',
             'kategori_nama'   => 'required|string|max:100',
         ]);
 
@@ -121,7 +121,7 @@ class KategoriController extends Controller
     public function update(Request $request, string $id)
     {
         $request->validate([
-            'kategori_kode' => 'required|string|max:5',
+            'kategori_kode' => 'required|string|max:10',
             'kategori_nama' => 'required|string|max:100',
         ]);
 
