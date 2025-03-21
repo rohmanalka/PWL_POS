@@ -7,7 +7,7 @@ use App\Http\Controllers\SaleController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LevelController;
 use App\Http\Controllers\KategoriController;
-
+use App\Http\Controllers\WelcomeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -41,3 +41,5 @@ Route::get('/penjualan', [SaleController::class, 'index']);
 
 // User Profile
 Route::get('/user/{id}/name/{name}', [UserController::class, 'profile']);
+
+Route::get('/', [WelcomeController::class, 'index']);
