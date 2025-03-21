@@ -46,10 +46,10 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a href="{{ url('/barang') }}" class="nav-link {{ ($activeMenu ==
+                <a href="{{ url('/supplier') }}" class="nav-link {{ ($activeMenu ==
                 'barang')? 'active' : '' }} ">
                     <i class="nav-icon far fa-list-alt"></i>
-                    <p>Data Barang</p>
+                    <p>Supplier Barang</p>
                 </a>
             </li>
             <li class="nav-header">Data Transaksi</li>
