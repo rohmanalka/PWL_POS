@@ -52,7 +52,6 @@ class LevelController extends Controller
                 $btn .= '<button onclick="modalAction(\'' . url('/level/' . $level->level_id .
                 '/delete_ajax') . '\')" class="btn btn-danger btn-sm">Hapus</button> ';
                 return $btn;
-                return $btn;
             })
             ->rawColumns(['aksi']) // memberitahu bahwa kolom aksi adalah html
             ->make(true);
