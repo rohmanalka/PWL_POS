@@ -59,21 +59,37 @@
                     <p>Daftar Barang</p>
                 </a>
             </li>
-            <li class="nav-header">Data Transaksi</li>
+            <li class="nav-header">Lainnya</li>
             <li class="nav-item">
-                <a href="{{ url('/stok') }}" class="nav-link {{ ($activeMenu == 'stok')?
-                'active' : '' }} ">
-                    <i class="nav-icon fas fa-cubes"></i>
-                    <p>Stok Barang</p>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a href="{{ url('/barang') }}" class="nav-link {{ ($activeMenu ==
-                'penjualan')? 'active' : '' }} ">
-                    <i class="nav-icon fas fa-cash-register"></i>
-                    <p>Transaksi Penjualan</p>
+                <form id="logout-form" action="{{ url('/logout') }}" method="POST" style="display: none;">
+                    @csrf
+                </form>
+                <a href="#" class="nav-link" id="logout">
+                    <i class="nav-icon fas fa-sign-out-alt"></i>
+                    <p>Logout</p>
                 </a>
             </li>
         </ul>
     </nav>
 </div>
+
+<script>
+    document.getElementById('logout').addEventListener('click', function(event) {
+        event.preventDefault();
+
+        Swal.fire({
+            title: 'Apakah Anda yakin?',
+            text: "Anda akan keluar dari sistem!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Ya, Logout!',
+            cancelButtonText: 'Batal'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                document.getElementById('logout-form').submit();
+            }
+        });
+    });
+</script>
