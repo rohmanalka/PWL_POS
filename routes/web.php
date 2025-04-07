@@ -150,6 +150,7 @@ Route::middleware(['auth'])->group(function () {
             // Excel Import
             Route::get('/import', [BarangController::class, 'import']);
             Route::post('/import_ajax', [BarangController::class, 'import_ajax']);
+            Route::get('/export_excel', [BarangController::class, 'export_excel']);
         });
     });
 });
