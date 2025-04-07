@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\BarangModel;
 use Illuminate\Http\Request;
 use App\Models\KategoriModel;
+use PhpOffice\PhpSpreadsheet\IOFactory;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Support\Facades\Validator;
 
@@ -177,7 +180,7 @@ class BarangController extends Controller
         $barang = BarangModel::find($id);
         $kategori = KategoriModel::select('kategori_id', 'kategori_nama')->get();
 
-        return view('barang.edit_ajax', ['kategori' => $kategori ,'barang' => $barang]);
+        return view('barang.edit_ajax', ['kategori' => $kategori, 'barang' => $barang]);
     }
 
     public function update(Request $request, string $id)
@@ -265,6 +268,62 @@ class BarangController extends Controller
             }
         }
         return redirect('/');
+    }
+
+    public function import()
+    {
+        return view('barang.import');
+    }
+
+    public function import_ajax(Request $request)
+    {
+        $rules = [
+            'file_barang' => ['required', 'mimes:xlsx,xls', 'max:1024'],
+        ];
+
+        $validator = Validator::make($request->all(), $rules);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => false,
+                'message' => 'Validasi Gagal',
+                'msgField' => $validator->errors(),
+            ]);
+        }
+
+        $file = $request->file('file_barang');
+        $spreadsheet = IOFactory::load($file->getRealPath());
+        $sheet = $spreadsheet->getActiveSheet();
+        $rows = $sheet->toArray();
+
+        $insert = [];
+        $header = array_shift($rows); // Ambil header
+
+        foreach ($rows as $row) {
+            if (!empty($row[0])) {
+                $insert[] = [
+                    'kategori_id' => $row[0],
+                    'barang_kode' => $row[1],
+                    'barang_nama' => $row[2],
+                    'harga_beli' => $row[3],
+                    'harga_jual' => $row[4],
+                    'created_at' => now(),
+                ];
+            }
+        }
+
+        if (!empty($insert)) {
+            BarangModel::insertOrIgnore($insert);
+
+            return redirect('/barang')->with('success', 'Data barang berhasil diimport: ' . count($insert) . ' record');
+
+            // return response()->json([
+            //     'status' => true,
+            //     'message' => 'Data berhasil diimport: ' . count($insert) . ' record',
+            // ]);
+        } else {
+            return redirect('/barang')->with('error', 'Data barang gagal diimport');
+        }
     }
 
     public function destroy(string $id)
