@@ -13,7 +13,7 @@ class UserModel extends Authenticatable
 
     protected $table = 'm_user';
     protected $primaryKey = 'user_id';
-    protected $fillable = ['level_id', 'username', 'nama', 'password', 'created_at', 'updated_at'];
+    protected $fillable = ['level_id', 'username', 'nama', 'password', 'avatar', 'created_at', 'updated_at'];
 
     protected $hidden = ['password'];
     protected $casts = ['password' => 'hashed'];
@@ -36,5 +36,10 @@ class UserModel extends Authenticatable
     public function getRole()
     {
         return $this->level->level_kode;
+    }
+
+    public function getAvatarAttribute($value)
+    {
+        return $value ? asset($value) : asset('images/default.png');
     }
 }

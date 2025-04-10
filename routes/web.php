@@ -10,6 +10,7 @@ use App\Http\Controllers\BarangController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\WelcomeController;
 use App\Http\Controllers\KategoriController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SupplierController;
 
 /*
@@ -152,6 +153,13 @@ Route::middleware(['auth'])->group(function () {
             Route::post('/import_ajax', [BarangController::class, 'import_ajax']);
             Route::get('/export_excel', [BarangController::class, 'export_excel']);
             Route::get('/export_pdf', [BarangController::class, 'export_pdf']);
+        });
+    });
+
+    Route::middleware(['authorize:ADM,MNG,STF'])->group(function () {
+        Route::group(['prefix' => 'profile'], function () {
+            Route::get('/', [ProfileController::class, 'index']);
+            Route::post('/avatar', [ProfileController::class, 'updateAvatar'])->name('profile.avatar');
         });
     });
 });
