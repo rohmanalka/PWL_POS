@@ -57,7 +57,7 @@ Route::middleware(['auth'])->group(function () {
             Route::delete('/{id}/delete_ajax', [UserController::class, 'delete_ajax']);
             Route::delete('/{id}', [UserController::class, 'destroy']);
         });
-    });
+    }); 
 
     Route::middleware(['authorize:ADM'])->group(function () {
         Route::group(['prefix' => 'level'], function () {
