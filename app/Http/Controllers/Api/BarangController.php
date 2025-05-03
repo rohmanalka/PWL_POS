@@ -22,18 +22,22 @@ class BarangController extends Controller
             'barang_nama' => 'required',
             'harga_beli' => 'required',
             'harga_jual' => 'required',
+            'image_barang' => 'required|image|mimes:jpeg,png,jpg,svg|max:2048'
         ]);
 
         if ($validator->fails()) {
             return response()->json($validator->errors(), 422);
         }
 
+        $image = $request->image_barang;
+
         $barang = BarangModel::create([
             'kategori_id' => $request->kategori_id,
             'barang_kode' => $request->barang_kode,
             'barang_nama' => $request->barang_nama,
             'harga_beli' => $request->harga_beli,
-            'harga_jual' => $request->harga_jual
+            'harga_jual' => $request->harga_jual,
+            'image_barang' => $image->hashName()
         ]);
 
         if ($barang) {
